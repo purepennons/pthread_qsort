@@ -32,6 +32,7 @@
 		E191E17D191F5FD000FF6035 /* FileAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileAPI.h; sourceTree = "<group>"; };
 		E191E180191F63F800FF6035 /* pthread_qsort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pthread_qsort.h; sourceTree = "<group>"; };
 		E191E186192221DF00FF6035 /* OtherAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherAPI.h; sourceTree = "<group>"; };
+		E191E1871922634200FF6035 /* Struct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Struct.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +78,7 @@
 				E191E17D191F5FD000FF6035 /* FileAPI.h */,
 				E191E180191F63F800FF6035 /* pthread_qsort.h */,
 				E191E186192221DF00FF6035 /* OtherAPI.h */,
+				E191E1871922634200FF6035 /* Struct.h */,
 			);
 			name = include;
 			sourceTree = "<group>";
