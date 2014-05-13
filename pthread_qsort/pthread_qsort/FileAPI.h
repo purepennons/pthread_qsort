@@ -24,7 +24,7 @@ int writeFile(char* filename, int* intArray, int arrayLength){
         fprintf(fp, "%d\n", intArray[i]);
     }
     fclose(fp);
-    printf("write data to %s, success.\n", filename);
+    printf("Write data to %s, success.\n", filename);
     return 0;
 }
 
@@ -50,11 +50,6 @@ int* readIntFromFileByLine(char* filename, int numOfLines){
         read = getline(&line, &len, fp);
         numArray[i] = atoi(line);
     }
-//    while ((read = getline(&line, &len, fp)) != -1) {
-//        stringArray[i] = line;
-//        printf("line = %s\n", line);
-//        i++;
-//    }
     return numArray;
 }
 
@@ -79,5 +74,6 @@ int getNumOfLinesInFile(char* filename){
     fclose(fp);
     return numOfLines;
 }
+
 
 
