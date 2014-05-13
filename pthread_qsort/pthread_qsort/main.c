@@ -41,7 +41,8 @@ int numOfNumbers = 0, tempLength = 0;
 int main(int argc, char *argv[]) {
     //init();
     //pthread_t threads[NUM_OF_THREADS];
-    struct InputAttribute input = getInputAttribute(INPUT_FILE, NUM_OF_THREADS);
+    struct InputAttribute inputStruct = getInputAttribute(INPUT_FILE, NUM_OF_THREADS);
+    printf("%d", inputStruct.numOfNumbers);
 
     return 0;
 }
