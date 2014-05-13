@@ -6,6 +6,8 @@
 //  Copyright (c) 2014年 Chiahao Lin. All rights reserved.
 //
 
+#include <stdio.h>
+#include <stdlib.h>
 int writeFile(char* filename, int* intArray, int arrayLength);
 int* readIntFromFileByLine(char* filename, int numOfLines);
 int getNumOfLinesInFile(char* filename);
