@@ -6,7 +6,7 @@
 #include "OtherAPI.h"
 #include "pthread_qsort.h"
 
-#define INPUT_FILE "123.txt"
+#define INPUT_FILE "input.txt"
 #define NUM_OF_THREADS 4
 
 //get input and inital matrix
@@ -44,6 +44,6 @@ int main(int argc, char *argv[]) {
 //    }
 //    printf("\n");
 //    printf("index = %d", index);
-    //pthread_qsort();
+    pthread_qsort((void *)&inputStruct);
     return 0;
 }
