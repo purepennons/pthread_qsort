@@ -83,8 +83,8 @@
 				E191E17D191F5FD000FF6035 /* FileAPI.c */,
 				E191E189192296B100FF6035 /* OtherAPI.h */,
 				E191E186192221DF00FF6035 /* OtherAPI.c */,
-				E191E180191F63F800FF6035 /* pthread_qsort.c */,
 				E191E18B19229B4B00FF6035 /* pthread_qsort.h */,
+				E191E180191F63F800FF6035 /* pthread_qsort.c */,
 			);
 			name = include;
 			sourceTree = "<group>";

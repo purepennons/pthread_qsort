@@ -9,13 +9,6 @@
 #define INPUT_FILE "input.txt"
 #define NUM_OF_THREADS 4
 
-void init();
-
-
-int **tempArray = NULL;
-int numOfNumbers = 0, tempLength = 0;
-
-
 //get input and inital matrix
 //void init(){
 //    int *numArray;
@@ -39,10 +32,18 @@ int numOfNumbers = 0, tempLength = 0;
 
 
 int main(int argc, char *argv[]) {
-    //init();
-    //pthread_t threads[NUM_OF_THREADS];
-    struct InputAttribute inputStruct = getInputAttribute(INPUT_FILE, NUM_OF_THREADS);
-    printf("%d", inputStruct.numOfNumbers);
-
+    pthread_t threads[NUM_OF_THREADS];
+    //struct InputAttribute inputStruct = getInputAttribute(INPUT_FILE, NUM_OF_THREADS);
+    int testArray[] = {23, 435, 231, 41, 65, 23, 86, 45, 34, 543};
+    for (int i=0; i<10; i++) {
+        printf("%d, ",testArray[i]);
+    }
+    int index = divideWithPivot(100, testArray,10);
+    printf("\n");
+    for (int i=0; i<10; i++) {
+        printf("%d, ",testArray[i]);
+    }
+    printf("\n");
+    printf("index = %d", index);
     return 0;
 }

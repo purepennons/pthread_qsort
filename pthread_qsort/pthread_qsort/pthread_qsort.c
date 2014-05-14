@@ -6,8 +6,11 @@
 //  Copyright (c) 2014年 Chiahao Lin. All rights reserved.
 //
 
+#include <stdio>
+#include <stdlib>
+#include "pthread_qsort.h"
+#include "Struct.h"
 
-#define NUM_OF_THREADS 4
 int compare(const void *a, const void *b);
 
 //qsort compare function
@@ -19,14 +22,23 @@ int compare(const void *a, const void *b)
     else if (c == d) {return 0;}
     else return 1;
 }
-void pthread_qsort(){
-    struct ThreadArguments thArg[NUM_OF_THREADS];
-    int *taskids[NUM_OF_THREADS];
+
+void initThreadInputs(struct InputAttribute inputStruct, struct ThreadArguments thArg){
+    
+}
+
+void pthread_qsort(struct InputAttribute inputStruct){
+    struct ThreadArguments thArg[inputStruct.numOfThreads];
+    int *taskids[inputStruct.numOfThreads];
     int rc, t;
-    for (t=0; t<NUM_OF_THREADS; t++) {
+    for (t=0; t<inputStruct.numOfThreads; t++) {
         thArg[t].threadId = t;
+        thArg[t].pivot = inputStruct.tempArray[0][getRandomNum(0, inputStruct.tempLength)];
+        thArg[t].splitArrayLength = inputStruct.tempLength;
+        thArg[t].splitArray = inputStruct.tempArray[t];
     }
 
 }
+
 
 

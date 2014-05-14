@@ -7,19 +7,41 @@
 //
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "Struct.h"
 #include "FileAPI.h"
+#include "OtherAPI.h"
+
+int getRandomNum(int min, int max){
+    int randomNum;
+    srand(time(NULL));
+    randomNum = (rand()%(max-min+1));
+    return randomNum;
+}
+
+void swap(int *x, int *y) {
+    if (x != y) {
+        *x ^= *y;
+        *y ^= *x;
+        *x ^= *y;
+    }
+}
 
 int** createIntMatrix(int m, int n){
     int **tempMatrix;
     int *pData;
-    int a;
+    int a, i, j;
     tempMatrix = (int**)malloc(m*sizeof(int*)+m*n*sizeof(int));
     for (a=0, pData=(int*)(tempMatrix+m); a<m;a++, pData+=n) {
         tempMatrix[a] = pData;
     }
     if (tempMatrix == NULL) {
         printf("Error: Fail to malloc memory.");
+    }
+    for (i=0; i<m; i++) {
+        for (j=0; j<n; j++) {
+            tempMatrix[i][j] = -1;
+        }
     }
     return tempMatrix;
 }
@@ -46,4 +68,16 @@ struct InputAttribute getInputAttribute(char *filename, int numOfThreads){
     attStruct.tempLength = (int)(attStruct.numOfNumbers/attStruct.numOfThreads)+(attStruct.numOfNumbers%attStruct.numOfThreads);
     attStruct.tempArray = splitArrayToMatrix(attStruct.numArray, attStruct.numOfNumbers, attStruct.numOfThreads, attStruct.tempLength);
     return attStruct;
+}
+
+int divideWithPivot(int pivot, int *unDivideArray, int length){
+    int index=0;
+    int i;
+    for (i=index; i<length; i++) {
+        if (unDivideArray[i] < pivot) {
+            swap(&unDivideArray[index], &unDivideArray[i]);
+            index++;
+        }
+    }
+    return index;
 }

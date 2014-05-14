@@ -7,6 +7,7 @@
 //
 
 #ifndef _OtherAPI
-#define _OtherAPI
-
+    #define _OtherAPI
+        extern int compare(const void *a, const void *b);
+        extern void pthread_qsort(struct InputAttribute inputStruct);
 #endif

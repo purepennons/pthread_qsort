@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "FileAPI.h"
 
 int writeFile(char* filename, int* intArray, int arrayLength){
     FILE *fp;
