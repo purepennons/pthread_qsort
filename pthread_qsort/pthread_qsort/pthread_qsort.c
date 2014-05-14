@@ -28,18 +28,19 @@ void initThreadInputs(struct ThreadArguments thArg){
 }
 
 void *singleThreadQuicksort(void *p){
-    struct ThreadArguments *singleThreadArg;
-    singleThreadArg = (struct ThreadArguments *)p;
+    //struct ThreadArguments *singleThreadArg;
+    //singleThreadArg = (struct ThreadArguments *)p;
+    printf("fuck");
     pthread_exit(NULL);
 }
 
 void pthread_qsort(void *p){
     struct InputAttribute *inputStruct;
+    inputStruct = (struct InputAttribute *)p;
     struct ThreadArguments *thArg;
+    thArg = (struct ThreadArguments *)malloc(sizeof(struct ThreadArguments)*(inputStruct->numOfThreads));
     pthread_t threads[inputStruct->numOfThreads];
     int rc, t;
-    inputStruct = (struct InputAttribute *)p;
-    thArg = (struct ThreadArguments *)malloc(sizeof(struct ThreadArguments)*(inputStruct->numOfThreads));
     printf("thread = %d\n", inputStruct->numOfThreads);
     printf("num = %d\n", inputStruct->numOfNumbers);
     for (t=0; t<(inputStruct->numOfThreads); t++) {
@@ -49,7 +50,7 @@ void pthread_qsort(void *p){
         thArg[t].splitArray = inputStruct->tempArray[t];
         printf("s: %d", thArg[t].splitArrayLength);
     }
-//    rc = pthread_create(&threads[t], NULL, singleThreadQuicksort, (void *) &thArg[t]);
+    rc = pthread_create(&threads[t], NULL, singleThreadQuicksort, (void *) &thArg[t]);
     pthread_exit(NULL);
 }
 
