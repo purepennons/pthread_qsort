@@ -6,12 +6,12 @@
 //  Copyright (c) 2014年 Chiahao Lin. All rights reserved.
 //
 
-#include <stdio>
-#include <stdlib>
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
 #include "pthread_qsort.h"
+#include "OtherAPI.h"
 #include "Struct.h"
-
-int compare(const void *a, const void *b);
 
 //qsort compare function
 int compare(const void *a, const void *b)
@@ -23,21 +23,28 @@ int compare(const void *a, const void *b)
     else return 1;
 }
 
-void initThreadInputs(struct InputAttribute inputStruct, struct ThreadArguments thArg){
+void initThreadInputs(struct ThreadArguments thArg){
     
 }
 
-void pthread_qsort(struct InputAttribute inputStruct){
-    struct ThreadArguments thArg[inputStruct.numOfThreads];
-    int *taskids[inputStruct.numOfThreads];
-    int rc, t;
-    for (t=0; t<inputStruct.numOfThreads; t++) {
-        thArg[t].threadId = t;
-        thArg[t].pivot = inputStruct.tempArray[0][getRandomNum(0, inputStruct.tempLength)];
-        thArg[t].splitArrayLength = inputStruct.tempLength;
-        thArg[t].splitArray = inputStruct.tempArray[t];
-    }
+void *singleThreadQuicksort(void *p){
+    pthread_exit(NULL);
+}
 
+void pthread_qsort(void *p){
+    struct InputAttribute *inputStruct;
+    struct ThreadArguments thArg[inputStruct->numOfThreads];
+    pthread_t threads[inputStruct->numOfThreads];
+    int rc, t;
+    inputStruct = (struct InputAttribute *)p;
+    for (t=0; t<inputStruct->numOfThreads; t++) {
+        thArg[t].threadId = t;
+        thArg[t].pivot = inputStruct->tempArray[0][getRandomNum(0, inputStruct->tempLength)];
+        thArg[t].splitArrayLength = inputStruct->tempLength;
+        thArg[t].splitArray = inputStruct->tempArray[t];
+    }
+    rc = pthread_create(&threads[t], NULL, singleThreadQuicksort, (void *) &thArg[t]);
+    pthread_exit(NULL);
 }
 
 

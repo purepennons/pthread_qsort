@@ -6,7 +6,7 @@
 #include "OtherAPI.h"
 #include "pthread_qsort.h"
 
-#define INPUT_FILE "input.txt"
+#define INPUT_FILE "123.txt"
 #define NUM_OF_THREADS 4
 
 //get input and inital matrix
@@ -32,18 +32,18 @@
 
 
 int main(int argc, char *argv[]) {
-    pthread_t threads[NUM_OF_THREADS];
-    //struct InputAttribute inputStruct = getInputAttribute(INPUT_FILE, NUM_OF_THREADS);
-    int testArray[] = {23, 435, 231, 41, 65, 23, 86, 45, 34, 543};
-    for (int i=0; i<10; i++) {
-        printf("%d, ",testArray[i]);
-    }
-    int index = divideWithPivot(100, testArray,10);
-    printf("\n");
-    for (int i=0; i<10; i++) {
-        printf("%d, ",testArray[i]);
-    }
-    printf("\n");
-    printf("index = %d", index);
+    struct InputAttribute inputStruct = getInputAttribute(INPUT_FILE, NUM_OF_THREADS);
+//    int testArray[] = {23, 435, 231, 41, 65, 23, 86, 45, 34, 543};
+//    for (int i=0; i<10; i++) {
+//        printf("%d, ",testArray[i]);
+//    }
+//    int index = divideWithPivot(100, testArray,10);
+//    printf("\n");
+//    for (int i=0; i<10; i++) {
+//        printf("%d, ",testArray[i]);
+//    }
+//    printf("\n");
+//    printf("index = %d", index);
+    //pthread_qsort();
     return 0;
 }
