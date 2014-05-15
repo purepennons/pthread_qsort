@@ -51,7 +51,7 @@ int** splitArrayToMatrix(int* inputArray, int length, int numOfArray, int splitA
     int i, j;
     for (i=0; i<numOfArray; i++) {
         for (j=0; j<splitArrayLength; j++) {
-            if ((i==(numOfArray-1)) && (i*splitArrayLength+j)>(length-2)) {
+            if ((i==(numOfArray-1)) && (i*splitArrayLength+j)>(length-1)) {
                 break;
             }
                 splitMatrix[i][j] = inputArray[i*splitArrayLength+j];
@@ -65,7 +65,8 @@ struct InputAttribute getInputAttribute(char *filename, int numOfThreads){
     attStruct.numOfThreads = numOfThreads;
     attStruct.numOfNumbers = getNumOfLinesInFile(filename);
     attStruct.numArray = readIntFromFileByLine(filename, attStruct.numOfNumbers);
-    attStruct.tempLength = (int)(attStruct.numOfNumbers/attStruct.numOfThreads)+(attStruct.numOfNumbers%attStruct.numOfThreads);
+    //Length of splitArray = (arrayLength + (n-(arrayLength%n)))/n, if arrayLength%n != 0, else Length of splitArray = arrayLength/n
+    attStruct.tempLength = (attStruct.numOfNumbers%attStruct.numOfThreads==0)? (int)(attStruct.numOfNumbers/attStruct.numOfThreads):(int)((attStruct.numOfNumbers+ (attStruct.numOfThreads - (attStruct.numOfNumbers%attStruct.numOfThreads)))/attStruct.numOfThreads);
     attStruct.tempArray = splitArrayToMatrix(attStruct.numArray, attStruct.numOfNumbers, attStruct.numOfThreads, attStruct.tempLength);
     return attStruct;
 }

@@ -6,7 +6,7 @@
 #include "OtherAPI.h"
 #include "pthread_qsort.h"
 
-#define INPUT_FILE "input.txt"
+#define INPUT_FILE "123.txt"
 #define NUM_OF_THREADS 4
 
 //get input and inital matrix
@@ -33,6 +33,13 @@
 
 int main(int argc, char *argv[]) {
     struct InputAttribute inputStruct = getInputAttribute(INPUT_FILE, NUM_OF_THREADS);
+    for (int i=0; i<inputStruct.numOfThreads; i++) {
+        for (int j=0; j<inputStruct.tempLength; j++) {
+            printf("#%d %d\n", j, inputStruct.tempArray[i][j]);
+        }
+    }
+    printf("length = %d\n", inputStruct.numOfNumbers);
+    printf("templength = %d\n", inputStruct.tempLength);
 //    int testArray[] = {23, 435, 231, 41, 65, 23, 86, 45, 34, 543};
 //    for (int i=0; i<10; i++) {
 //        printf("%d, ",testArray[i]);
