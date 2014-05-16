@@ -11,7 +11,7 @@ struct ThreadArguments{
     int threadId;
     int pivot;
     int *index;
-    int splitArrayLength;
+    int *splitArrayLength;
     int **tempArray;
     int numOfThreads;
     
