@@ -27,6 +27,19 @@ void swap(int *x, int *y) {
     }
 }
 
+int* createArray(int m, int initalValue){
+    int *array;
+    int i;
+    array = (int*)malloc(m*sizeof(int));
+    if (array == NULL) {
+        printf("Error: Fail to malloc memory.");
+    }
+    for (i=0; i<m; i++) {
+        array[i] = initalValue;
+    }
+    return array;
+}
+
 int** createIntMatrix(int m, int n){
     int **tempMatrix;
     int *pData;
@@ -81,4 +94,16 @@ int divideWithPivot(int pivot, int *unDivideArray, int length){
         }
     }
     return index;
+}
+
+int* cascadeArray(int *array1, int from1, int to1, int *array2, int from2, int to2){
+    int *tempArray = createArray((to1-from1+1)+(to2-from2+1), 0);
+    int i, j;
+    for (i=0;i<(to1-from1+1); i++) {
+        tempArray[i] = array1[from1+i];
+    }
+    for (j=(to1-from1+1); j<(to1-from1+1)+(to2-from2+1); j++) {
+        tempArray[j] = array2[from2+j -(to1-from1+1)];
+    }
+    return tempArray;
 }

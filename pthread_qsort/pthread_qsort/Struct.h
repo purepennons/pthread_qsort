@@ -5,13 +5,16 @@
 //  Created by PureWind on 2014/5/13.
 //  Copyright (c) 2014年 Chiahao Lin. All rights reserved.
 //
+#include <pthread.h>
 
 struct ThreadArguments{
     int threadId;
     int pivot;
-    int index;
+    int *index;
     int splitArrayLength;
-    int *splitArray;
+    int **tempArray;
+    int numOfThreads;
+    
 };
 
 struct InputAttribute{

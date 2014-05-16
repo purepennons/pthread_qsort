@@ -32,25 +32,22 @@
 
 
 int main(int argc, char *argv[]) {
-    struct InputAttribute inputStruct = getInputAttribute(INPUT_FILE, NUM_OF_THREADS);
-    for (int i=0; i<inputStruct.numOfThreads; i++) {
-        for (int j=0; j<inputStruct.tempLength; j++) {
-            printf("#%d %d\n", j, inputStruct.tempArray[i][j]);
-        }
+    //struct InputAttribute inputStruct = getInputAttribute(INPUT_FILE, NUM_OF_THREADS);
+    int testArray[] = {23, 435, 231, 41, 65, 23, 86, 45, 34, 543};
+    int testArray2[] = {1, 32, 53, 453, 67};
+    int *tempArray;
+    //pthread_qsort((void *)&inputStruct);
+    tempArray = cascadeArray(testArray, 1, 4, testArray2, 2, 3);
+    for (int i=0; i<10; i++) {
+        printf("%d, ", testArray[i]);
     }
-    printf("length = %d\n", inputStruct.numOfNumbers);
-    printf("templength = %d\n", inputStruct.tempLength);
-//    int testArray[] = {23, 435, 231, 41, 65, 23, 86, 45, 34, 543};
-//    for (int i=0; i<10; i++) {
-//        printf("%d, ",testArray[i]);
-//    }
-//    int index = divideWithPivot(100, testArray,10);
-//    printf("\n");
-//    for (int i=0; i<10; i++) {
-//        printf("%d, ",testArray[i]);
-//    }
-//    printf("\n");
-//    printf("index = %d", index);
-    pthread_qsort((void *)&inputStruct);
+    printf("\n");
+    for (int j=0; j<5; j++) {
+        printf("%d, ", testArray2[j]);
+    }
+    printf("\n");
+    for (int k=0; k<(3-0+1)+(3-0+1); k++) {
+        printf("%d, ",tempArray[k]);
+    }
     return 0;
 }
