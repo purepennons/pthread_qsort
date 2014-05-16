@@ -7,7 +7,7 @@
 #include "pthread_qsort.h"
 
 #define INPUT_FILE "123.txt"
-#define NUM_OF_THREADS 4
+#define NUM_OF_THREADS 8
 
 //get input and inital matrix
 //void init(){

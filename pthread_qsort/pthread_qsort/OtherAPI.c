@@ -99,16 +99,11 @@ int divideWithPivot(int pivot, int *unDivideArray, int length){
 int* cascadeArray(int *array1, int from1, int to1, int *array2, int from2, int to2){
     int *tempArray = createArray((to1-from1+1)+(to2-from2+1), 0);
     int i, j;
-    printf("A: \n");
     for (i=0;i<(to1-from1+1); i++) {
-        printf("%d ", array1[from1+i]);
         tempArray[i] = array1[from1+i];
     }
-    printf("\n B: ");
     for (j=(to1-from1+1); j<(to1-from1+1)+(to2-from2+1); j++) {
-        printf("%d ",array2[from2+j -(to1-from1+1)]);
         tempArray[j] = array2[from2+j -(to1-from1+1)];
     }
-    printf("\n");
     return tempArray;
 }
