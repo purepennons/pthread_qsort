@@ -107,3 +107,23 @@ int* cascadeArray(int *array1, int from1, int to1, int *array2, int from2, int t
     }
     return tempArray;
 }
+
+int* waitArray(int numOfThreads, int hierarchy){
+    int totalCondWait = numOfThreads/2;
+    int padding = hierarchy/2;
+    int numOfCluster = totalCondWait/padding;
+    int *condArray = (int*)malloc(sizeof(int)*totalCondWait);
+
+    int i, j=1;
+    condArray[0] = 0;
+    for (i=1; i<totalCondWait; i++) {
+        if (j<padding) {
+            condArray[i] = condArray[i-1] + 1;
+            j++;
+        }else{
+            condArray[i] = condArray[i-padding] + hierarchy;
+            j=1;
+        }
+    }
+    return condArray;
+}

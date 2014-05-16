@@ -30,7 +30,8 @@ int compare(const void *a, const void *b)
 void *initThreadInputs(int i){
     if(i!=0){
         printf("123\n");
-        *initThreadInputs(--i);
+        i=i-1;
+        initThreadInputs(i);
     }
 }
 
@@ -44,21 +45,23 @@ void *singleThreadQuicksort(void *p){
     int numOfThreads = singleThreadArg->numOfThreads;
     int hierarchy = singleThreadArg->hierarchy;
     int currentThreadId = singleThreadArg->threadId;
-    int sisterThreadId = currentThreadId + (numOfThreads/2);
+    int sisterThreadId = currentThreadId + (hierarchy/2);
     int *pivot = singleThreadArg->pivot;
     int *splitArrayLength = singleThreadArg->splitArrayLength;
     int *index = singleThreadArg->index;
     int **tempArray = singleThreadArg->tempArray;
     
-    
+    if(hierarchy==1){
+        
+    }else{
     //doDivide with pivot
     singleThreadArg->index[currentThreadId] = divideWithPivot(pivot[currentThreadId], tempArray[currentThreadId], splitArrayLength[currentThreadId]);
     
     //critical section
     pthread_mutex_lock(&changeMutex); //lock
-    if (currentThreadId < (numOfThreads/2)) {
-        while (!checkSignal[currentThreadId%(numOfThreads/2)]) {
-            pthread_cond_wait(&changeCond[currentThreadId%(numOfThreads/2)], &changeMutex);
+    if (currentThreadId < (hierarchy/2)) {
+        while (!checkSignal[currentThreadId%(hierarchy/2)]) {
+            pthread_cond_wait(&changeCond[currentThreadId%(hierarchy/2)], &changeMutex);
             //pthread_cond_wait
         }
         printf("cur = %d, sister = %d\n", currentThreadId, sisterThreadId);
@@ -71,18 +74,18 @@ void *singleThreadQuicksort(void *p){
         splitArrayLength[sisterThreadId] = ((index[sisterThreadId]-1) - 0 + 1) + ((index[currentThreadId]-1)-0+1);
         
         //test
-        singleThreadArg->numOfThreads = numOfThreads/2;
-        singleThreadArg->pivot[currentThreadId] = singleThreadArg->tempArray[]
-        singleThreadArg->pivot[sisterThreadId] =
+        singleThreadArg->hierarchy = hierarchy/2;
+//        singleThreadArg->pivot[currentThreadId] = singleThreadArg->tempArray[]
+//        singleThreadArg->pivot[sisterThreadId] =
         
     }else{
-        checkSignal[currentThreadId%(numOfThreads/2)] = 1;
-        pthread_cond_signal(&changeCond[currentThreadId%(numOfThreads/2)]);
+        checkSignal[currentThreadId%(hierarchy/2)] = 1;
+        pthread_cond_signal(&changeCond[currentThreadId%(hierarchy/2)]);
     }
     pthread_mutex_unlock(&changeMutex); //unlock
     //end of critical section
-        
-        
+    }
+    
     pthread_exit((void *) (currentThreadId));
 }
 
