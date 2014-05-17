@@ -17,4 +17,5 @@
         extern int divideWithPivot(int pivot, int *unDivideArray, int length);
         extern int* cascadeArray(int *array1, int from1, int to1, int *array2, int from2, int to2);
         extern int* waitArray(int numOfThreads, int hierarchy);
+        extern int isExistInArray(int *array, int length, int search);
 #endif

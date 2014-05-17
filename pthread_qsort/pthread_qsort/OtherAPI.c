@@ -127,3 +127,20 @@ int* waitArray(int numOfThreads, int hierarchy){
     }
     return condArray;
 }
+
+int isExistInArray(int *array, int length, int search){
+    int low = 0;
+    int high = length-1;
+    int middle;
+    while (low <= high) {
+        middle = (low+high)/2;
+        if (array[middle] == search) {
+            return 1;
+        }else if(array[middle] > search){
+            high = middle -1;
+        }else if(array[middle] < search){
+            low = middle + 1;
+        }
+    }
+    return 0;
+}

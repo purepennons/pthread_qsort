@@ -35,13 +35,14 @@ int main(int argc, char *argv[]) {
     struct InputAttribute inputStruct = getInputAttribute(INPUT_FILE, NUM_OF_THREADS);
     int testArray[] = {23, 435, 231, 41, 65, 23, 86, 45, 34, 543};
     int testArray2[] = {1, 32, 53, 453, 67};
-    int *tempArray;
-    tempArray = waitArray(8, 2);
-    for (int i=0; i<4; i++) {
-        printf("%d, ", tempArray[i]);
-    }
-    printf("\n");
-    //pthread_qsort((void *)&inputStruct);
+//    int *tempArray;
+//    tempArray = waitArray(8, 2);
+//    for (int i=0; i<4; i++) {
+//        printf("%d, ", tempArray[i]);
+//    }
+//    printf("\n");
+//    printf("isExist: %d\n",isExistInArray(tempArray, 4, 6));
+    pthread_qsort((void *)&inputStruct);
 
     return 0;
 }
