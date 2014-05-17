@@ -7,15 +7,15 @@
 //
 #include <pthread.h>
 
-struct ThreadArguments{
-    int threadId;
-    int *pivot;
-    int *index;
-    int *splitArrayLength;
-    int **tempArray;
-    int numOfThreads;
-    int hierarchy;
-};
+//struct ThreadArguments{
+//    int threadId;
+//    int *pivot;
+//    int *index;
+//    int *splitArrayLength;
+//    int **tempArray;
+//    int numOfThreads;
+//    int hierarchy;
+//};
 
 struct InputAttribute{
     int numOfThreads;
@@ -23,4 +23,14 @@ struct InputAttribute{
     int tempLength;
     int *numArray;
     int **tempArray;
+};
+
+struct ThreadArguments{
+    int threadId;
+    int pivot;
+    int index;
+    int splitArrayLength;
+    int *tempArray;
+    int numOfThreads;
+    int hierarchy;
 };

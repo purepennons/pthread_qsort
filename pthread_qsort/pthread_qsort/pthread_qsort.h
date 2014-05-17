@@ -7,8 +7,7 @@
 //
 #ifndef _pthread_qsort
     #define _pthread_qsort
-        extern int compare(const void *a, const void *b);
-        extern void *initThreadInputs();
         extern void *singleThreadQuicksort(void *p);
         extern void pthread_qsort(void *p);
+        extern void changeArray(void *p1, void *p2);
 #endif
