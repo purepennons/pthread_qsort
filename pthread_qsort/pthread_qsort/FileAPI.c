@@ -8,8 +8,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Struct.h"
 #include "FileAPI.h"
+
+enum {LINE_CNT = 150, BUF_SIZE = 20};
+
 
 int writeFile(char* filename, int* intArray, int arrayLength){
     FILE *fp;
@@ -83,22 +87,37 @@ int getNumOfLinesInFile(char* filename){
     FILE *fp;
     int numOfLines = 0;
     char ch;
+    char buf[BUF_SIZE+1] ;
+    char * ptr;
+    size_t read_bytes;
+    
     fp = fopen(filename, "r");
     if(fp == NULL){
         printf("Error: Can not open %s.\n", filename);
         return 1;
     }
-    do{
-        ch = fgetc(fp);
-        if (ch == '\n') {
+    //slow way
+//    do{
+//        ch = fgetc(fp);
+//        if (ch == '\n') {
+//            numOfLines++;
+//        }
+//    }while(ch != EOF);
+//    if ((ch != '\n') && (numOfLines != 0)) {
+//        numOfLines++;
+//    }
+    
+    //fast way
+    while((read_bytes = fread(buf, 1, BUF_SIZE, fp))) { // read_bytes==0 時結束
+        buf[read_bytes] = '\0';
+        ptr = (char*)strchr(buf, '\n');
+        while(ptr!=NULL) {
             numOfLines++;
+            ptr = (char*)strchr(ptr+1, '\n');
         }
-    }while(ch != EOF);
-    if ((ch != '\n') && (numOfLines != 0)) {
-        numOfLines++;
     }
     fclose(fp);
-    return numOfLines;
+    return numOfLines+1;
 }
 
 
