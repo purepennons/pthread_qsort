@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
         printf("\n");
         printf("argv[0] = 執行檔, argv[1] = thread 數量, argv[2] = input檔名, argv[3] = output檔名\n");
         printf("\n");
-        printf("thread數量需為2的倍數.\n");
+        printf("thread數量需為偶數.\n");
         printf("\n");
         printf("EX: ./exe 4 input.txt output.txt\n");
         exit(-1);
@@ -35,6 +35,11 @@ int main(int argc, char *argv[]) {
     //qsort main function
     struct InputAttribute inputStruct = getInputAttribute(argv[2], atoi(argv[1]));
     struct outputAttribute outputStruct =  pthread_qsort((void *)&inputStruct);
+//    for (int i =0; i<outputStruct.numOfArray; i++) {
+//        for (int j=0; j<outputStruct.arrayLength[i]; j++) {
+//            printf("%d\n",outputStruct.outputArray[i][j]);
+//        }
+//    }
     writeFileByOutputAttribute(argv[3], (void *)&outputStruct);
     
     //end to record.

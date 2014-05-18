@@ -38,12 +38,14 @@ int writeFileByOutputAttribute(char* filename, void *output){
     }
     int i, j;
     for (i=0; i<outputStruct->numOfArray; i++) {
-        for (j=0; j<outputStruct->arrayLength[i]; j++) {
-            if (i!=0 || j!=0) {
-            }else{
-                j = outputStruct->numOfArray - (outputStruct->numOfNumbers%outputStruct->numOfArray);
+        if (i!=0) {
+            for (j=0; j<outputStruct->arrayLength[i]; j++) {
+                fprintf(fp, "%d\n", outputStruct->outputArray[i][j]);
             }
-            fprintf(fp, "%d\n", outputStruct->outputArray[i][j]);
+        }else{
+            for (j=outputStruct->numOfArray - (outputStruct->numOfNumbers%outputStruct->numOfArray); j<outputStruct->arrayLength[i]; j++) {
+                fprintf(fp, "%d\n", outputStruct->outputArray[i][j]);
+            }
         }
     }
     fclose(fp);
