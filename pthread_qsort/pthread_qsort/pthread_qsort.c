@@ -14,9 +14,9 @@
 #include "OtherAPI.h"
 #include "Struct.h"
 
-int *checkSignal;
-pthread_mutex_t changeMutex;
-pthread_cond_t *changeCond;
+//int *checkSignal;
+//pthread_mutex_t changeMutex;
+//pthread_cond_t *changeCond;
 //int* leaderThreadArray;  //決定一個thread是否進入交換迴圈中
 //qsort compare function
 
@@ -176,6 +176,10 @@ pthread_cond_t *changeCond;
 //    pthread_exit(NULL);
 //}
 
+int compare (const void * a, const void * b)
+{
+    return ( *(int*)a - *(int*)b );
+}
 
 void *singleThreadQuicksort(void *p){
     
@@ -191,7 +195,7 @@ void *singleThreadQuicksort(void *p){
     int *tempArray = singleThreadArg->tempArray;
 
     if(hierarchy==1){
-        
+        qsort(tempArray, splitArrayLength, sizeof(int), compare);
     }else{
         //doDivide with pivot
         singleThreadArg->index = divideWithPivot(pivot, tempArray, splitArrayLength);
@@ -199,7 +203,7 @@ void *singleThreadQuicksort(void *p){
     pthread_exit((void *) (currentThreadId));
 }
 
-void pthread_qsort(void *p){
+struct outputAttribute pthread_qsort(void *p){
     struct InputAttribute *inputStruct;
     inputStruct = (struct InputAttribute *)p;
     
@@ -233,7 +237,7 @@ void pthread_qsort(void *p){
 
 
     //create threads
-    for (int i=0; i<=(int)(log((double)inputStruct->numOfThreads)/log(2.0)); i++){
+    for (i=0; i<=(int)(log((double)inputStruct->numOfThreads)/log(2.0)); i++){
 //        for (int i=0; i<inputStruct->numOfThreads; i++) {
 //            printf("pivot = %d\n", thArg[i].pivot);
 //            //printf("%d, ", thArg[0].splitArrayLength[i]);
@@ -255,7 +259,7 @@ void pthread_qsort(void *p){
                 printf("ERROR; return code from pthread_join() is %d\n", rc);
                 exit(-1);
             }
-            printf("Main: completed join with thread %ld having a status of %ld\n",t,(long)status);
+            //printf("Main: completed join with thread %ld having a status of %ld\n",t,(long)status);
         }
         
         //swap array
@@ -279,23 +283,34 @@ void pthread_qsort(void *p){
             }
             thArg[t].pivot = pivot;
         }
-
-
-
     }
+//    
+//    for (int i=0; i<inputStruct->numOfThreads; i++) {
+//        //printf("#%d  index = %d\n", i, thArg[i].index);
+//        //printf("#%d  len = %d\n", i, thArg[i].splitArrayLength);
+//        for (int j=0; j<thArg[i].splitArrayLength; j++) {
+//            printf("%d, ", thArg[i].tempArray[j]);
+//        }
+//        printf("\n");
+//    }
     
-    for (int i=0; i<inputStruct->numOfThreads; i++) {
-        printf("#%d  index = %d\n", i, thArg[i].index);
-        printf("#%d  len = %d\n", i, thArg[i].splitArrayLength);
-        for (int j=0; j<thArg[i].splitArrayLength; j++) {
-            printf("%d, ", thArg[i].tempArray[j]);
-        }
-        printf("\n");
-    }
-    
-    //Clean up and exit.
+    //Clean up and exit pthread.
     pthread_attr_destroy(&attr);
-    pthread_exit(NULL);
+    //pthread_exit(NULL);
+    
+    //set output parameters
+    struct outputAttribute outputStruct;
+    int ** outputArray = (int**)malloc(sizeof(int*)*inputStruct->numOfThreads);
+    outputStruct.numOfNumbers = inputStruct->numOfNumbers;
+    outputStruct.numOfArray = inputStruct->numOfThreads;
+    outputStruct.outputArray = outputArray;
+    outputStruct.arrayLength = (int*)malloc(sizeof(int) * inputStruct->numOfThreads);
+    for(t=0;t<inputStruct->numOfThreads;t++){
+        outputStruct.arrayLength[t] = thArg[t].splitArrayLength;
+        outputArray[t] = thArg[t].tempArray;
+    }
+    
+    return outputStruct;
 }
 
 void changeArray(void *p1, void *p2){

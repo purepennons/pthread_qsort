@@ -88,7 +88,7 @@ int divideWithPivot(int pivot, int *unDivideArray, int length){
     int index=0;
     int i;
     for (i=index; i<length; i++) {
-        if (unDivideArray[i] < pivot) {
+        if (unDivideArray[i] > pivot) {
             swap(&unDivideArray[index], &unDivideArray[i]);
             index++;
         }

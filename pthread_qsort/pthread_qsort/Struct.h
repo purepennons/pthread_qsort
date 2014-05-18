@@ -34,3 +34,10 @@ struct ThreadArguments{
     int numOfThreads;
     int hierarchy;
 };
+
+struct outputAttribute{
+    int numOfNumbers;
+    int numOfArray;
+    int *arrayLength;
+    int **outputArray;
+};

@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "Struct.h"
 #include "FileAPI.h"
 
 int writeFile(char* filename, int* intArray, int arrayLength){
@@ -25,6 +26,31 @@ int writeFile(char* filename, int* intArray, int arrayLength){
     printf("Write data to %s, success.\n", filename);
     return 0;
 }
+
+int writeFileByOutputAttribute(char* filename, void *output){
+    FILE *fp;
+    struct outputAttribute *outputStruct;
+    outputStruct = (struct outputAttribute *)output;
+    fp = fopen(filename, "w");
+    if (fp == NULL) {
+        printf("Error: Can not open %s.\n", filename);
+        return 1;
+    }
+    int i, j;
+    for (i=0; i<outputStruct->numOfArray; i++) {
+        for (j=0; j<outputStruct->arrayLength[i]; j++) {
+            if (i!=0 || j!=0) {
+            }else{
+                j = outputStruct->numOfArray - (outputStruct->numOfNumbers%outputStruct->numOfArray);
+            }
+            fprintf(fp, "%d\n", outputStruct->outputArray[i][j]);
+        }
+    }
+    fclose(fp);
+    printf("Write data to %s, success.\n", filename);
+    return 0;
+}
+
 
 int* readIntFromFileByLine(char* filename, int numOfLines){
     FILE *fp;
