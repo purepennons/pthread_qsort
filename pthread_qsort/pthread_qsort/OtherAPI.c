@@ -88,7 +88,7 @@ int divideWithPivot(int pivot, int *unDivideArray, int length){
     int index=0;
     int i;
     for (i=index; i<length; i++) {
-        if (unDivideArray[i] <= pivot) {
+        if (unDivideArray[i] < pivot) {
             swap(&unDivideArray[index], &unDivideArray[i]);
             index++;
         }
@@ -97,7 +97,7 @@ int divideWithPivot(int pivot, int *unDivideArray, int length){
 }
 
 int* cascadeArray(int *array1, int from1, int to1, int *array2, int from2, int to2){
-    int *tempArray = createArray((to1-from1+1)+(to2-from2+1), 0);
+    int *tempArray = createArray((to1-from1+1)+(to2-from2+1), -1);
     int i, j;
     for (i=0;i<(to1-from1+1); i++) {
         tempArray[i] = array1[from1+i];
@@ -109,12 +109,17 @@ int* cascadeArray(int *array1, int from1, int to1, int *array2, int from2, int t
 }
 
 int* waitArray(int numOfThreads, int hierarchy){
+    if(hierarchy<=1){
+        return NULL;
+    }
+    
     int totalCondWait = numOfThreads/2;
     int padding = hierarchy/2;
     int numOfCluster = totalCondWait/padding;
     int *condArray = (int*)malloc(sizeof(int)*totalCondWait);
 
     int i, j=1;
+
     condArray[0] = 0;
     for (i=1; i<totalCondWait; i++) {
         if (j<padding) {

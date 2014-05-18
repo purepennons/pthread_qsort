@@ -17,7 +17,7 @@
 int *checkSignal;
 pthread_mutex_t changeMutex;
 pthread_cond_t *changeCond;
-int* leaderThreadArray;  //決定一個thread是否進入交換迴圈中
+//int* leaderThreadArray;  //決定一個thread是否進入交換迴圈中
 //qsort compare function
 
 
@@ -210,7 +210,7 @@ void pthread_qsort(void *p){
     //threads parameters
     pthread_t threads[inputStruct->numOfThreads];
     pthread_attr_t attr;
-    int rc, i, t, pivot;
+    int rc, i, t, pivot, *leaderThreadArray;
     void *status;
     
     //Initialize parameters
@@ -220,8 +220,8 @@ void pthread_qsort(void *p){
     //initialize parameters from threadArguments
     for (t=0; t<inputStruct->numOfThreads; t++) {
         thArg[t].threadId = t;
-        //thArg[t].pivot = inputStruct->tempArray[0][getRandomNum(0, inputStruct->tempLength)];
-        thArg[t].pivot = inputStruct->tempArray[0][0];
+        thArg[t].pivot = inputStruct->tempArray[0][getRandomNum(0, inputStruct->tempLength)];
+        //thArg[t].pivot = inputStruct->tempArray[0][0];
         thArg[t].splitArrayLength = inputStruct->tempLength;
         thArg[t].tempArray = inputStruct->tempArray[t];
         thArg[t].numOfThreads = inputStruct->numOfThreads;
@@ -234,10 +234,11 @@ void pthread_qsort(void *p){
 
     //create threads
     for (int i=0; i<=(int)(log((double)inputStruct->numOfThreads)/log(2.0)); i++){
-        for (int i=0; i<inputStruct->numOfThreads; i++) {
-            printf("pivot = %d\n", thArg[i].pivot);
-            //printf("%d, ", thArg[0].splitArrayLength[i]);
-        }
+//        for (int i=0; i<inputStruct->numOfThreads; i++) {
+//            printf("pivot = %d\n", thArg[i].pivot);
+//            //printf("%d, ", thArg[0].splitArrayLength[i]);
+//        }
+        
         
         for (t=0; t<(inputStruct->numOfThreads); t++) {
             rc = pthread_create(&threads[t], &attr, singleThreadQuicksort, (void *) &thArg[t]);
@@ -257,29 +258,39 @@ void pthread_qsort(void *p){
             printf("Main: completed join with thread %ld having a status of %ld\n",t,(long)status);
         }
         
-        changeArray((void *)&thArg[0], (void *)&thArg[1]);
-        
-        for (int i=0; i<inputStruct->numOfThreads; i++) {
-            printf("#%d  index = %d\n", i, thArg[i].index);
-            for (int j=0; j<thArg->splitArrayLength; j++) {
-                printf("%d, ", thArg[i].tempArray[j]);
+        //swap array
+        if (thArg[0].hierarchy>1) {
+            leaderThreadArray = waitArray(thArg[0].numOfThreads, thArg[0].hierarchy);
+            for(t=0;t<inputStruct->numOfThreads;t++){
+                if(isExistInArray(leaderThreadArray, inputStruct->numOfThreads/2, t)){
+                    changeArray((void *)&thArg[t], (void *)&thArg[t+(thArg[t].hierarchy/2)]);
+                }
             }
-            printf("\n");
         }
         
+        //update parameters
         for (t=0; t<(inputStruct->numOfThreads); t++) {
             if(thArg[t].hierarchy > 1){
                 thArg[t].hierarchy = thArg[t].hierarchy/2;
             }
             if ((t%thArg[t].hierarchy)==0) {
-                //pivot = thArg[t].tempArray[t][getRandomNum(0, thArg[t].splitArrayLength[t])];
-                pivot =thArg[t].tempArray[0];
+                pivot = thArg[t].tempArray[getRandomNum(0, thArg[t].splitArrayLength)];
+                //pivot =thArg[t].tempArray[0];
             }
             thArg[t].pivot = pivot;
         }
 
 
 
+    }
+    
+    for (int i=0; i<inputStruct->numOfThreads; i++) {
+        printf("#%d  index = %d\n", i, thArg[i].index);
+        printf("#%d  len = %d\n", i, thArg[i].splitArrayLength);
+        for (int j=0; j<thArg[i].splitArrayLength; j++) {
+            printf("%d, ", thArg[i].tempArray[j]);
+        }
+        printf("\n");
     }
     
     //Clean up and exit.
@@ -294,10 +305,9 @@ void changeArray(void *p1, void *p2){
     sisterStruct = (struct ThreadArguments*)p2;
     int *temp = currentStruct->tempArray;
     currentStruct->tempArray = cascadeArray(sisterStruct->tempArray, sisterStruct->index, sisterStruct->splitArrayLength-1, currentStruct->tempArray, currentStruct->index, currentStruct->splitArrayLength-1);
-   
+    currentStruct->splitArrayLength = ((sisterStruct->splitArrayLength-1) - sisterStruct->index + 1) + ((currentStruct->splitArrayLength-1) -  currentStruct->index + 1);
     sisterStruct->tempArray = cascadeArray(sisterStruct->tempArray, 0, sisterStruct->index-1, temp, 0, currentStruct->index-1);
     sisterStruct->splitArrayLength = ((sisterStruct->index-1) - 0 + 1) + ((currentStruct->index-1)-0+1);
-
 }
 
 
