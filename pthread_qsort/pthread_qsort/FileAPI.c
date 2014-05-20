@@ -40,8 +40,11 @@ int writeFileByOutputAttribute(char* filename, void *output){
         printf("Error: Can not open %s.\n", filename);
         return 1;
     }
-    int i, j;
-    printf("total = %d\n", outputStruct->arrayLength[0]+outputStruct->arrayLength[1]+outputStruct->arrayLength[2]+outputStruct->arrayLength[3]);
+    int i, j, k, total=0;
+    for (k=0; k<outputStruct->numOfArray; k++) {
+        total += outputStruct->arrayLength[k];
+    }
+    printf("total = %d\n", total);
     for (i=0; i<outputStruct->numOfArray; i++) {
         if (i!=0) {
             for (j=0; j<outputStruct->arrayLength[i]; j++) {
@@ -66,7 +69,7 @@ int* readIntFromFileByLine(char* filename, int numOfLines){
     int *numArray;
     char *line = NULL;
     size_t len = 0;
-    ssize_t read;
+    size_t read;
     fp = fopen(filename, "r");
     if(fp == NULL){
         printf("Error: Can not open %s.\n", filename);
