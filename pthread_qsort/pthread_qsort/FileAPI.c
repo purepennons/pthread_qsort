@@ -41,13 +41,15 @@ int writeFileByOutputAttribute(char* filename, void *output){
         return 1;
     }
     int i, j;
+    printf("total = %d\n", outputStruct->arrayLength[0]+outputStruct->arrayLength[1]+outputStruct->arrayLength[2]+outputStruct->arrayLength[3]);
     for (i=0; i<outputStruct->numOfArray; i++) {
         if (i!=0) {
             for (j=0; j<outputStruct->arrayLength[i]; j++) {
                 fprintf(fp, "%d\n", outputStruct->outputArray[i][j]);
             }
         }else{
-            for (j=outputStruct->numOfArray - (outputStruct->numOfNumbers%outputStruct->numOfArray); j<outputStruct->arrayLength[i]; j++) {
+            int flag = (outputStruct->numOfNumbers%outputStruct->numOfArray==0)?0:(outputStruct->numOfArray - (outputStruct->numOfNumbers%outputStruct->numOfArray));
+            for (j=flag; j<outputStruct->arrayLength[i]; j++) {
                 fprintf(fp, "%d\n", outputStruct->outputArray[i][j]);
             }
         }
@@ -117,7 +119,7 @@ int getNumOfLinesInFile(char* filename){
         }
     }
     fclose(fp);
-    return numOfLines+1;
+    return numOfLines+1; //使用fread，會少讀最後一行，若檔案無最後一行空白的話。
 }
 
 
