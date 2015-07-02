@@ -13,6 +13,6 @@ a quick sort function in pthread
 一個數字即換行，無最後一行留白。
 
 # Params
-`argv[1]`: number of threads
-`argv[2]`: input file
-`argv[3]`: output file
+`argv[1]`: number of threads 
+`argv[2]`: input file 
+`argv[3]`: output file 
